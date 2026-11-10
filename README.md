@@ -84,3 +84,44 @@ std::out_of_range из метода std::vector::at в случае переда
 3. выгрузить результат на github.com в свой аккаунт
 В Чат с преподавателем в Личном кабинете отправить:
 1. ссылку на репозиторий с исходниками приложения
+
+// build
+cmake -S . -B build && cmake --build build
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release && cmake --build build -j$(nproc)
+
+cmake -S . -B build-debug -DCMAKE_BUILD_TYPE=Debug && cmake --build build-debug -j$(nproc)
+gdb ./build-debug/07_hm
+
+(gdb) break main
+(gdb) run
+(gdb) next
+(gdb) n 2
+(gdb) finish
+
+(gdb) break 39
+(gdb) tbreak 39     // временный, удалится
+(gdb) continue
+(gdb) print vec     // всё содержимое
+(gdb) print print vec.m_size // поле
+
+(gdb) print *vec.m_data@vec.m_size    // трактуем m_data как массив длины m_size
+(gdb) info  locals
+            args
+
+// Настройка для шагов
+(gdb) display vec.m_size
+(gdb) undisplay 1
+(gdb) info display 
+
+(gdb) watch vec.m_size   // остановиться при изменении значания
+(gdb) rwatch vec.m_size
+(gdb) awatch vec.m_size    // будет останавливаться при измнении 
+(gdb) continue
+
+(gdb) bt                //показать стек
+(gdb) frame 0           //main
+(gdb) frame 1           //func
+(gdb) info frame
+(gdb) info registers
+(gdb) up                // на уровень выше в стеке
+(gdb) down
